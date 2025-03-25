@@ -19,7 +19,7 @@ from gymnasium.core import Wrapper
 import numpy as np
 
 
-INTERVENTION_START = 0.7
+INTERVENTION_START = 0.8
 INTERVENTION_END = 0.9
 INT_A = 2.0/(INTERVENTION_START-INTERVENTION_END)
 INT_B = 1.0 - INT_A * INTERVENTION_START
@@ -44,10 +44,9 @@ class SimpleActionMask(Wrapper):
         if self.env.unwrapped.task.debug:
             action = np.array(self.env.unwrapped.task.agent.get_debug_action(), dtype=np.float32)
         hazard_lidar = obs["hazards_lidar"]
-        max_forward_lidar = max(hazard_lidar[0], hazard_lidar[15])
-        max_backward_lidar = max(hazard_lidar[7], hazard_lidar[8])
+        max_forward_lidar = max(hazard_lidar[0], hazard_lidar[1], hazard_lidar[14], hazard_lidar[15])
+        max_backward_lidar = max(hazard_lidar[6], hazard_lidar[7], hazard_lidar[8], hazard_lidar[9])
         max_action = np.array([min(max(INT_A * max_forward_lidar + INT_B, -1), 1), 1.0])
         min_action = np.array([min(max(-INT_A * max_backward_lidar + INT_B_BACK, -1), 1), -1.0])
         scaled_action = (action - ACTION_RANGE_MIN) * (max_action-min_action)/(ACTION_RANGE_MAX-ACTION_RANGE_MIN) + min_action
-        print(f"Hazard 0/15 = {hazard_lidar[0]:.2}, {hazard_lidar[15]:.2} | Action = [{scaled_action[0]:.2}, {scaled_action[1]:.2}]")
         return self.env.step(scaled_action)
