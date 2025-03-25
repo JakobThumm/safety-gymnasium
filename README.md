@@ -43,17 +43,11 @@ If you find Safety-Gymnasium useful, please cite it in your publications.
 
 --------------------------------------------------------------------------------
 
-# Note for v1.1.0 and v1.2.0❗️❗️❗️
-
-We have updated the environments for both the Safe Vision series and the Safe Isaac Gym series. However, due to **package size constraints**, we have not yet uploaded versions **v1.1.0** and **v1.2.0** to PyPI. As a result, users are required to manually download and install. We currently recommend using GitHub's **Download zip** feature to obtain our package and access the latest environments. In the future, we plan to deploy resources separately to a cloud service to accommodate PyPI. Stay tuned for further updates.
-
-**Python 3.11 is not supported for now, due to the incompatibility of pygame.**
+# Installation
+Clone this repository, then in this folder, run:
 ```bash
-conda create -n example python=3.8
-conda activate example
-wget https://github.com/PKU-Alignment/safety-gymnasium/archive/refs/heads/main.zip
-unzip main.zip
-cd safety-gymnasium-main
+conda create -n gymnasium python=3.11
+conda activate gymnasium
 pip install -e .
 ```
 
