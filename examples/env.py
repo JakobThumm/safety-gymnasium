@@ -15,13 +15,18 @@
 """Examples for environments."""
 
 import argparse
+import numpy as np
 
 import safety_gymnasium
+
+from safety_gymnasium.wrappers.simple_action_mask import SimpleActionMask
 
 
 def run_random(env_name):
     """Random run."""
-    env = safety_gymnasium.make(env_name, render_mode='human')
+    n_steps = 10000000
+    env = safety_gymnasium.make(env_name, render_mode='human', max_episode_steps=n_steps)
+    env = SimpleActionMask(env)
     obs, info = env.reset()  # pylint: disable=unused-variable
     # Use below to specify seed.
     # obs, _ = env.reset(seed=0)
@@ -34,6 +39,7 @@ def run_random(env_name):
             obs, info = env.reset()  # pylint: disable=unused-variable
         assert env.observation_space.contains(obs)
         act = env.action_space.sample()
+        act = np.zeros_like(act)
         assert env.action_space.contains(act)
         # pylint: disable-next=unused-variable
         obs, reward, cost, terminated, truncated, info = env.step(act)

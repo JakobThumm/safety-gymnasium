@@ -66,3 +66,17 @@ class Point(BaseAgent):
             elif key == glfw.KEY_L:
                 action[1] -= 1
         self.apply_action(action)
+
+    def get_debug_action(self):
+        """Apply action which inputted from keyboard."""
+        action = np.array([0, 0])
+        for key in self.debug_info.keys:
+            if key == glfw.KEY_I:
+                action[0] += 1
+            elif key == glfw.KEY_K:
+                action[0] -= 1
+            elif key == glfw.KEY_J:
+                action[1] += 1
+            elif key == glfw.KEY_L:
+                action[1] -= 1
+        return action

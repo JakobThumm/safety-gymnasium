@@ -332,7 +332,8 @@ class Underlying(abc.ABC):  # pylint: disable=too-many-instance-attributes
         """
         # Simulate physics forward
         if self.debug:
-            self.agent.debug()
+            # self.agent.debug() # TODO: This is just a hack to test the action wrapper
+            self.agent.apply_action(action, None)
         else:
             noise = (
                 self.action_noise * self.random_generator.randn(self.agent.body_info.nu)

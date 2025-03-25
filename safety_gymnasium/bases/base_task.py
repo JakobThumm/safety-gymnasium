@@ -179,7 +179,7 @@ class BaseTask(Underlying):  # pylint: disable=too-many-instance-attributes,too-
         """
 
         self.task_name: str
-        self.num_steps = 1000  # Maximum number of environment steps in an episode
+        self.num_steps = 10E12  # Maximum number of environment steps in an episode
 
         self.lidar_conf = LidarConf()
         self.compass_conf = CompassConf()
@@ -412,7 +412,7 @@ class BaseTask(Underlying):  # pylint: disable=too-many-instance-attributes,too-
             placements_dict[object_fmt.format(i=i)] = (placements, object_keepout)
         return placements_dict
 
-    def obs(self) -> dict | np.ndarray:
+    def obs(self, force_unflattened: bool = False) -> dict | np.ndarray:
         """Return the observation of our agent."""
         # pylint: disable-next=no-member
         mujoco.mj_forward(self.model, self.data)  # Needed to get sensor's data correct
@@ -432,6 +432,9 @@ class BaseTask(Underlying):  # pylint: disable=too-many-instance-attributes,too-
         assert self.obs_info.obs_space_dict.contains(
             obs,
         ), f'Bad obs {obs} {self.obs_info.obs_space_dict}'
+
+        if force_unflattened:
+          return obs
 
         if self.observation_flatten:
             obs = gymnasium.spaces.utils.flatten(self.obs_info.obs_space_dict, obs)
