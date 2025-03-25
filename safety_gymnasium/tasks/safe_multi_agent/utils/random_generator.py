@@ -17,6 +17,7 @@
 from __future__ import annotations
 
 import numpy as np
+from typing import Optional
 
 from safety_gymnasium.tasks.safe_multi_agent.utils.common_utils import ResamplingError
 
@@ -61,7 +62,7 @@ class RandomGenerator:
         self.random_generator: np.random.RandomState = None  # pylint: disable=no-member
         self.placements: dict = None
         self.placements_extents: list = None
-        self.placements_margin: float = None
+        self.placements_margin: Optional[float] = None
         self.layout: dict[str, dict] = None
 
     def set_placements_info(

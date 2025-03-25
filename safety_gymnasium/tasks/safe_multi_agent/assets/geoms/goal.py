@@ -14,6 +14,7 @@
 # ==============================================================================
 """Goal."""
 
+from typing import Optional
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -29,7 +30,7 @@ class Goal(Geom):  # pylint: disable=too-many-instance-attributes
 
     name: str = 'goal'
     size: float = 0.3
-    placements: list = None  # Placements where goal may appear (defaults to full extents)
+    placements: Optional[list] = field(default_factory=lambda: None)  # Placements where goal may appear (defaults to full extents)
     locations: list = field(default_factory=list)  # Fixed locations to override placements
     keepout: float = 0.4  # Keepout radius when placing goals
     alpha: float = 0.25
@@ -40,8 +41,8 @@ class Goal(Geom):  # pylint: disable=too-many-instance-attributes
     # if reward_distance is 0, then the reward function is sparse
     reward_distance: float = 1.0  # Dense reward multiplied by the distance moved to the goal
 
-    color: np.array = COLOR['goal']
-    group: np.array = GROUP['goal']
+    color: np.ndarray = field(default_factory=lambda: COLOR['goal'])
+    group: int = GROUP['goal']
     is_lidar_observed: bool = True
     is_comp_observed: bool = False
     is_constrained: bool = False

@@ -14,6 +14,7 @@
 # ==============================================================================
 """Robot."""
 
+from typing import Optional
 import os
 from dataclasses import InitVar, dataclass, field
 
@@ -31,11 +32,11 @@ class Robot:  # pylint: disable=too-many-instance-attributes
 
     path: InitVar[str]
 
-    placements: list = None  # Robot placements list (defaults to full extents)
+    placements: Optional[list] = field(default_factory=lambda: None)  # Robot placements list (defaults to full extents)
     locations: list = field(default_factory=list)  # Explicitly place robot XY coordinate
     keepout: float = 0.4  # Needs to be set to match the robot XML used
     base: str = 'assets/xmls/car.xml'  # Which robot XML to use as the base
-    rot: float = None  # Override robot starting angle
+    rot: Optional[float] = None  # Override robot starting angle
 
     def __post_init__(self, path) -> None:
         self.base = path

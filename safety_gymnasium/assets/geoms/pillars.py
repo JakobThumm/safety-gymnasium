@@ -14,6 +14,7 @@
 # ==============================================================================
 """Pillar."""
 
+from typing import Optional
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -31,14 +32,14 @@ class Pillars(Geom):  # pylint: disable=too-many-instance-attributes
     num: int = 0  # Number of pillars in the world
     size: float = 0.2  # Size of pillars
     height: float = 0.5  # Height of pillars
-    placements: list = None  # Pillars placements list (defaults to full extents)
+    placements: Optional[list] = field(default_factory=lambda: None)  # Pillars placements list (defaults to full extents)
     locations: list = field(default_factory=list)  # Fixed locations to override placements
     keepout: float = 0.3  # Radius for placement of pillars
     cost: float = 1.0  # Cost (per step) for being in contact with a pillar
 
-    color: np.array = COLOR['pillar']
+    color: np.ndarray = field(default_factory=lambda: COLOR['pillar'])
     alpha: float = 1.0
-    group: np.array = GROUP['pillar']
+    group: int = GROUP['pillar']
     is_lidar_observed: bool = True
     is_constrained: bool = True
     is_meshed: bool = False

@@ -17,7 +17,7 @@
 from __future__ import annotations
 
 from dataclasses import asdict, dataclass
-from typing import Any, ClassVar
+from typing import Any, ClassVar, Optional
 
 import gymnasium
 import numpy as np
@@ -43,11 +43,11 @@ class RenderConf:
             ``camera_id`` and ``camera_name`` can only be set one of them.
     """
 
-    mode: str = None
+    mode: Optional[str] = None
     width: int = 256
     height: int = 256
-    camera_id: int = None
-    camera_name: str = None
+    camera_id: Optional[int] = None
+    camera_name: Optional[str] = None
 
 
 # pylint: disable-next=too-many-instance-attributes
@@ -126,12 +126,12 @@ class Builder(gymnasium.Env, gymnasium.utils.EzPickle):
 
         self.task_id: str = task_id
         self.config: dict = config
-        self._seed: int = None
+        self._seed: Optional[int] = None
         self._setup_simulation()
 
         self.first_reset: bool = None
-        self.steps: int = None
-        self.cost: float = None
+        self.steps: Optional[int] = None
+        self.cost: Optional[float] = None
         self.terminated: bool = True
         self.truncated: bool = False
 

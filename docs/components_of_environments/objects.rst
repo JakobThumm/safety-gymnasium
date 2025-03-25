@@ -82,9 +82,9 @@ Each object has **custom parameters** and **methods** needed to interact with th
         keepout: float = 0.3  # Keepout radius when placing goals
 
         # Colors displayed in Simulator
-        color: np.array = COLOR['apple']
+        color: np.ndarray = field(default_factory=lambda: COLOR['apple'])
         # Dividing groups to serve certain mechanisms, e.g., lidar.
-        group: np.array = GROUP['apple']
+        group: int = GROUP['apple']
         # Whether it is observed by lidar in the current environment
         is_lidar_observed: bool = True
         # Whether or not it is observed by the compass in the current environment, only objects with a constant number of one are supported.

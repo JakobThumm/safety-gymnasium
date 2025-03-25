@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import abc
 import os
+from typing import Optional
 from dataclasses import dataclass, field
 
 import glfw
@@ -101,10 +102,10 @@ class BodyInfo:
         geom_names (list): List of geom names in agent.
     """
 
-    nq: int = None
-    nv: int = None
-    nu: int = None
-    nbody: int = None
+    nq: Optional[int] = None
+    nv: Optional[int] = None
+    nu: Optional[int] = None
+    nbody: Optional[int] = None
     geom_names: list = field(default_factory=list)
 
 

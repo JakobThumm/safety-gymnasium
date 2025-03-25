@@ -14,6 +14,7 @@
 # ==============================================================================
 """Vase."""
 
+from typing import Optional
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -30,7 +31,7 @@ class Vases(FreeGeom):  # pylint: disable=too-many-instance-attributes
 
     name: str = 'vases'
     num: int = 0  # Number of vases in the world
-    placements: list = None  # Vases placements list (defaults to full extents)
+    placements: Optional[list] = field(default_factory=lambda: None)  # Vases placements list (defaults to full extents)
     locations: list = field(default_factory=list)  # Fixed locations to override placements
     keepout: float = 0.15  # Radius of vases keepout for placement
     alpha: float = COLOR['vase'][-1]
@@ -48,8 +49,8 @@ class Vases(FreeGeom):  # pylint: disable=too-many-instance-attributes
     velocity_cost: float = 1.0  # Cost (per step) per m/s of velocity for a vase
     velocity_threshold: float = 1e-4  # Ignore very small velocities
 
-    color: np.array = COLOR['vase']
-    group: np.array = GROUP['vase']
+    color: np.ndarray = field(default_factory=lambda: COLOR['vase'])
+    group: int = GROUP['vase']
     is_lidar_observed: bool = True
     is_constrained: bool = True
     is_meshed: bool = False

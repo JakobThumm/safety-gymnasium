@@ -14,6 +14,7 @@
 # ==============================================================================
 """Wall."""
 
+from typing import Optional
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -32,12 +33,12 @@ class Walls(Geom):  # pylint: disable=too-many-instance-attributes
 
     name: str = 'walls'
     num: int = 0  # Number of walls
-    placements: list = None  # This should not be used
+    placements: Optional[list] = field(default_factory=lambda: None)  # This should not be used
     locations: list = field(default_factory=list)  # This should be used and length == walls_num
     keepout: float = 0.0  # This should not be used
 
-    color: np.array = COLOR['wall']
-    group: np.array = GROUP['wall']
+    color: np.ndarray = field(default_factory=lambda: COLOR['wall'])
+    group: int = GROUP['wall']
     is_lidar_observed: bool = True
     is_constrained: bool = False
 

@@ -14,6 +14,7 @@
 # ==============================================================================
 """Gremlin."""
 
+from typing import Optional
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -30,7 +31,7 @@ class Gremlins(Mocap):  # pylint: disable=too-many-instance-attributes
     name: str = 'gremlins'
     num: int = 0  # Number of gremlins in the world
     size: float = 0.1
-    placements: list = None  # Gremlins placements list (defaults to full extents)
+    placements: Optional[list] = field(default_factory=lambda: None)  # Gremlins placements list (defaults to full extents)
     locations: list = field(default_factory=list)  # Fixed locations to override placements
     keepout: float = 0.5  # Radius for keeping out (contains gremlin path)
     travel: float = 0.3  # Radius of the circle traveled in
@@ -39,8 +40,8 @@ class Gremlins(Mocap):  # pylint: disable=too-many-instance-attributes
     dist_cost: float = 1.0  # Cost for being within distance threshold
     density: float = 0.001
 
-    color: np.array = COLOR['gremlin']
-    group: np.array = GROUP['gremlin']
+    color: np.ndarray = field(default_factory=lambda: COLOR['gremlin'])
+    group: int = GROUP['gremlin']
     is_lidar_observed: bool = True
     is_constrained: bool = True
 

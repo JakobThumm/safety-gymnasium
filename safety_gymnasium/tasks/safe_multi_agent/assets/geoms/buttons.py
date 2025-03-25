@@ -14,6 +14,7 @@
 # ==============================================================================
 """Button."""
 
+from typing import Optional
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -30,13 +31,13 @@ class Buttons(Geom):  # pylint: disable=too-many-instance-attributes
     name: str = 'buttons'
     num: int = 0  # Number of buttons to add
     size: float = 0.1
-    placements: list = None  # Buttons placements list (defaults to full extents)
+    placements: Optional[list] = field(default_factory=lambda: None)  # Buttons placements list (defaults to full extents)
     locations: list = field(default_factory=list)  # Fixed locations to override placements
     keepout: float = 0.2  # Buttons keepout radius for placement
-    goal_button: int = None  # Button to be the goal
+    goal_button: Optional[int] = None  # Button to be the goal
 
     resampling_delay: float = 10  # Buttons have a timeout period (steps) before resampling
-    timer: int = None
+    timer: Optional[int] = None
 
     cost: float = 1.0  # Cost for pressing the wrong button, if constrain_buttons
     reward_goal: float = 1.0  # Sparse reward for being inside the goal area
@@ -45,8 +46,8 @@ class Buttons(Geom):  # pylint: disable=too-many-instance-attributes
     # if reward_distance is 0, then the reward function is sparse
     reward_distance: float = 1.0  # Dense reward multiplied by the distance moved to the goal
 
-    color: np.array = COLOR['button']
-    group: np.array = GROUP['button']
+    color: np.ndarray = field(default_factory=lambda: COLOR['button'])
+    group: int = GROUP['button']
     is_lidar_observed: bool = True
     is_constrained: bool = True
 

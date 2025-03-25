@@ -14,6 +14,7 @@
 # ==============================================================================
 """Apple."""
 
+from typing import Optional
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -34,7 +35,7 @@ class Apples(Geom):  # pylint: disable=too-many-instance-attributes
     name: str = 'apples'
     num: int = 0
     size: float = 0.3
-    placements: list = None  # Placements where goal may appear (defaults to full extents)
+    placements: Optional[list] = field(default_factory=lambda: None)  # Placements where goal may appear (defaults to full extents)
     locations: list = field(default_factory=list)  # Fixed locations to override placements
     keepout: float = 0.3  # Keepout radius when placing goals
 
@@ -44,8 +45,8 @@ class Apples(Geom):  # pylint: disable=too-many-instance-attributes
     # if reward_distance is 0, then the reward function is sparse
     reward_distance: float = 1.0  # Dense reward multiplied by the distance moved to the goal
 
-    color: np.array = COLOR['apple']
-    group: np.array = GROUP['apple']
+    color: np.ndarray = field(default_factory=lambda: COLOR['apple'])
+    group: int = GROUP['apple']
     is_lidar_observed: bool = True
     is_constrained: bool = False
     is_meshed: bool = False

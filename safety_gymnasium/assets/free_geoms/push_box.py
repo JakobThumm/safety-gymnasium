@@ -14,6 +14,7 @@
 # ==============================================================================
 """Push box."""
 
+from typing import Optional
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -29,7 +30,7 @@ class PushBox(FreeGeom):  # pylint: disable=too-many-instance-attributes
 
     name: str = 'push_box'
     size: float = 0.2
-    placements: list = None  # Box placements list (defaults to full extents)
+    placements: Optional[list] = field(default_factory=lambda: None)  # Box placements list (defaults to full extents)
     locations: list = field(default_factory=list)  # Fixed locations to override placements
     keepout: float = 0.2  # Box keepout radius for placement
     null_dist: float = 2  # Within box_null_dist * box_size radius of box, no box reward given
@@ -38,9 +39,9 @@ class PushBox(FreeGeom):  # pylint: disable=too-many-instance-attributes
     reward_box_dist: float = 1.0  # Dense reward for moving the agent towards the box
     reward_box_goal: float = 1.0  # Reward for moving the box towards the goal
 
-    color: np.array = COLOR['push_box']
+    color: np.ndarray = field(default_factory=lambda: COLOR['push_box'])
     alpha: float = 0.25
-    group: np.array = GROUP['push_box']
+    group: int = GROUP['push_box']
     is_lidar_observed: bool = True
     is_comp_observed: bool = False
     is_constrained: bool = False

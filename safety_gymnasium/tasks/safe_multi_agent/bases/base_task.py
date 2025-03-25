@@ -19,7 +19,8 @@ from __future__ import annotations
 import abc
 import os
 from collections import OrderedDict
-from dataclasses import dataclass
+from typing import Optional
+from dataclasses import dataclass, field
 
 import gymnasium
 import mujoco
@@ -192,8 +193,8 @@ class BaseTask(Underlying):  # pylint: disable=too-many-instance-attributes,too-
 
         self._is_load_static_geoms = False  # Whether to load static geoms in current task.
         self.static_geoms_names: dict
-        self.static_geoms_contact_cost: float = None
-        self.contact_other_cost: float = None
+        self.static_geoms_contact_cost: Optional[float] = None
+        self.contact_other_cost: Optional[float] = None
 
     def dist_goal(self) -> float:
         """Return the distance from the agent to the goal XY position."""

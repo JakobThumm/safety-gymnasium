@@ -14,6 +14,7 @@
 # ==============================================================================
 """Hazard."""
 
+from typing import Optional
 from dataclasses import dataclass, field
 
 import numpy as np
@@ -30,14 +31,14 @@ class Hazards(Geom):  # pylint: disable=too-many-instance-attributes
     name: str = 'hazards'
     num: int = 0  # Number of hazards in an environment
     size: float = 0.2
-    placements: list = None  # Placements list for hazards (defaults to full extents)
+    placements: Optional[list] = field(default_factory=lambda: None)  # Placements list for hazards (defaults to full extents)
     locations: list = field(default_factory=list)  # Fixed locations to override placements
     keepout: float = 0.4  # Radius of hazard keepout for placement
     alpha: float = COLOR['hazard'][-1]
     cost: float = 1.0  # Cost (per step) for violating the constraint
 
-    color: np.array = COLOR['hazard']
-    group: np.array = GROUP['hazard']
+    color: np.ndarray = field(default_factory=lambda: COLOR['hazard'])
+    group: int = GROUP['hazard']
     is_lidar_observed: bool = True
     is_constrained: bool = True
     is_meshed: bool = False

@@ -14,7 +14,8 @@
 # ==============================================================================
 """Circle."""
 
-from dataclasses import dataclass
+from typing import Optional
+from dataclasses import dataclass, field
 
 import numpy as np
 
@@ -29,13 +30,13 @@ class Circle(Geom):  # pylint: disable=too-many-instance-attributes
 
     name: str = 'circle'
     radius: float = 1.5
-    placements: list = None
+    placements: Optional[list] = field(default_factory=lambda: None)
     locations: tuple = ((0, 0),)
     keepout: float = 0.0
 
-    color: np.array = COLOR['circle']
+    color: np.ndarray = field(default_factory=lambda: COLOR['circle'])
     alpha: float = 0.1
-    group: np.array = GROUP['circle']
+    group: int = GROUP['circle']
     is_lidar_observed: bool = True
     is_constrained: bool = False
     is_meshed: bool = False
