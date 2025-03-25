@@ -44,8 +44,10 @@ class SimpleActionMask(Wrapper):
         if self.env.unwrapped.task.debug:
             action = np.array(self.env.unwrapped.task.agent.get_debug_action(), dtype=np.float32)
         hazard_lidar = obs["hazards_lidar"]
-        max_forward_lidar = max(hazard_lidar[0], hazard_lidar[1], hazard_lidar[14], hazard_lidar[15])
-        max_backward_lidar = max(hazard_lidar[6], hazard_lidar[7], hazard_lidar[8], hazard_lidar[9])
+        vases_lidar = obs["vases_lidar"]
+        obstacles_lidar = np.max(np.array([hazard_lidar, vases_lidar]), axis=0)
+        max_forward_lidar = max(obstacles_lidar[0], obstacles_lidar[1], obstacles_lidar[14], obstacles_lidar[15])
+        max_backward_lidar = max(obstacles_lidar[6], obstacles_lidar[7], obstacles_lidar[8], obstacles_lidar[9])
         max_action = np.array([min(max(INT_A * max_forward_lidar + INT_B, -1), 1), 1.0])
         min_action = np.array([min(max(-INT_A * max_backward_lidar + INT_B_BACK, -1), 1), -1.0])
         scaled_action = (action - ACTION_RANGE_MIN) * (max_action-min_action)/(ACTION_RANGE_MAX-ACTION_RANGE_MIN) + min_action
